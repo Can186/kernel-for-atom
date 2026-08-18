@@ -34,6 +34,7 @@ jobs:
           touch drivers/input/touchscreen/focaltech_touch/include/firmware/fw_ft3518_i.fw
           touch drivers/input/touchscreen/focaltech_touch/include/firmware/fw_sample.i
           touch drivers/input/touchscreen/focaltech_touch/include/pramboot/FT8719_Pramboot_V0.5_20171221.i
+          grep -q "stpcpy" lib/string.c || printf '\n#ifndef __HAVE_ARCH_STPCPY\nchar *stpcpy(char *dest, const char *src)\n{\n\twhile ((*dest = *src) != '"'\\0'"') {\n\t\tdest++;\n\t\tsrc++;\n\t}\n\treturn dest;\n}\nEXPORT_SYMBOL(stpcpy);\n#endif\n' >> lib/string.c
           make -j$(nproc) ARCH=arm64 SUBARCH=arm64 CC=clang LD=ld.lld O=out atom_user_defconfig
           scripts/config --file out/.config --disable CONFIG_CC_STACKPROTECTOR_STRONG
           scripts/config --file out/.config --disable LTO_CLANG
