@@ -26,6 +26,12 @@ jobs:
           export CROSS_COMPILE_ARM32=arm-linux-androideabi-
           export CLANG_TRIPLE=aarch64-linux-gnu-
           sed -i 's/(unsigned int)\*cmdq_handle/(unsigned long)*cmdq_handle/g' drivers/gpu/drm/mediatek/mtk_drm_crtc.c
+          mkdir -p drivers/input/touchscreen/focaltech_touch/include/firmware
+          mkdir -p drivers/input/touchscreen/focaltech_touch/include/pramboot
+          touch drivers/input/touchscreen/focaltech_touch/include/firmware/fw_ft3518_j7.i
+          touch drivers/input/touchscreen/focaltech_touch/include/firmware/fw_ft3518_i.fw
+          touch drivers/input/touchscreen/focaltech_touch/include/firmware/fw_sample.i
+          touch drivers/input/touchscreen/focaltech_touch/include/pramboot/FT8719_Pramboot_V0.5_20171221.i
           make -j$(nproc) ARCH=arm64 SUBARCH=arm64 CC=clang LD=ld.lld O=out atom_user_defconfig
           scripts/config --file out/.config --disable CONFIG_CC_STACKPROTECTOR_STRONG
           scripts/config --file out/.config --disable LTO_CLANG
