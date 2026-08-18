@@ -28,7 +28,8 @@ jobs:
           make -j$(nproc) ARCH=arm64 SUBARCH=arm64 CC=clang LD=ld.lld O=out atom_user_defconfig
           scripts/config --file out/.config --disable CONFIG_CC_STACKPROTECTOR_STRONG
           scripts/config --file out/.config --disable LTO_CLANG
-          make -j$(nproc) ARCH=arm64 SUBARCH=arm64 CC=clang LD=ld.lld O=out
+          yes "" | make -j$(nproc) ARCH=arm64 SUBARCH=arm64 CC=clang LD=ld.lld O=out olddefconfig
+          yes "" | make -j$(nproc) ARCH=arm64 SUBARCH=arm64 CC=clang LD=ld.lld O=out
 
       - name: 上传 Image
         uses: actions/upload-artifact@v4
